@@ -125,6 +125,12 @@ class Review:
                                                self.url,
                                                str(self.soup.__class__)))
 
+    def __eq__(self, other):
+        """Check if this review is equal to another one."""
+        if isinstance(other, self.__class__):
+            return self.url == other.url
+        return False
+
 
 class MultiReview(Review):
     """
