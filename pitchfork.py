@@ -8,9 +8,9 @@ email: mmczaplinski@gmail.com
 """
 
 import json
-import re
 import difflib
 import sys
+from urllib.parse import quote
 from bs4 import BeautifulSoup
 
 
@@ -202,8 +202,9 @@ def search(artist, album):
     Returns either a Review object or a MultiReview object depending on
     the type of review because some pitchfork reviews cover multiple albums.
     """
-    # replace spaces in the url with the '%20'
-    query = re.sub('\s+', '%20', artist + '%20' + album)
+    # escape special characters
+    query = '{} {}'.format(artist, album)
+    query = quote(query)
     # using a custom user agent header
     request = Request(url='http://pitchfork.com/search/?query=' + query,
                       data=None,
